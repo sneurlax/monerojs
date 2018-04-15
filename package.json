@@ -1,10 +1,10 @@
 {
   "name": "moneronodejs",
   "version": "1.0.0",
-  "description": "NodeJS module for generating Monero address",
+  "description": "A Monero library written in Node.js by the Monero-Integrations team.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",
@@ -13,10 +13,22 @@
   "keywords": [
     "monero"
   ],
-  "author": "SerHack",
+  "author": "Monero-Integrations team <support@monerointegrations.com> (https://monerointegrations.com)",
+  "constributors": [
+    "SerHack <nico@serhack.me> (https://serhack.me)",
+    "sneurlax <sneurlax@gmail.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/monero-integrations/moneronodejs/issues"
   },
-  "homepage": "https://github.com/monero-integrations/moneronodejs#readme"
+  "homepage": "https://github.com/monero-integrations/moneronodejs#readme",
+  "dependencies": {
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "should": "^8.3.0"
+  }
 }

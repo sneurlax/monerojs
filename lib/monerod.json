@@ -1,0 +1,12 @@
+[
+  {
+    "hostname": "127.0.0.1",
+    "port": 18081,
+    "protocol": "http"
+  },
+  {
+    "hostname": "127.0.0.1",
+    "port": 18089,
+    "protocol": "http"
+  }
+]

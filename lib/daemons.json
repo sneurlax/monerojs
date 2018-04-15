@@ -1,0 +1,62 @@
+[
+  {
+    "hostname": "ushouldrunyourownnode.moneroworld.com",
+    "port": 18089,
+    "protocol": "http"
+  },
+  {
+    "hostname": "opennode.xmr-tw.org",
+    "port": 18089,
+    "protocol": "http"
+  },
+  {
+    "hostname": "geo.node.moneroworld.com",
+    "port": 18089,
+    "protocol": "http"
+  },
+  {
+    "hostname": "node.moneroworld.com",
+    "port": 18089,
+    "protocol": "http"
+  },
+  {
+    "hostname": "node.xmrbackb.one",
+    "port": 18081,
+    "protocol": "http"
+  },
+  {
+    "hostname": "node.viaxmr.com ",
+    "port": 18081,
+    "protocol": "http"
+  },
+  {
+    "hostname": "geo.node.moneroworld.com",
+    "port": 18089,
+    "protocol": "http"
+  },
+  {
+    "hostname": "af.node.moneroworld.com",
+    "port": 18089,
+    "protocol": "http"
+  },
+  {
+    "hostname": "as.node.moneroworld.com",
+    "port": 18089,
+    "protocol": "http"
+  },
+  {
+    "hostname": "na.node.moneroworld.com",
+    "port": 18089,
+    "protocol": "http"
+  },
+  {
+    "hostname": "eu.node.moneroworld.com",
+    "port": 18089,
+    "protocol": "http"
+  },
+  {
+    "hostname": "oc.node.moneroworld.com",
+    "port": 18089,
+    "protocol": "http"
+  }
+]
