@@ -2,7 +2,7 @@
 const Monero = require('../index.js');
 
 let network = 'testnet'; // Network to test
-
+/*
 describe('remote nodes', () => {
   const daemons = require('../lib/remote-daemons.json');
 
@@ -707,7 +707,7 @@ describe('daemonRPC constructor', () => {
   })
   .timeout(5000);
 });
-
+*/
 describe('walletRPC constructor', () => {
   it('should connect to wallet', done => {
     var walletRPC = new Monero.walletRPC({ autoconnect: true, network: network, initialize: false })
@@ -715,7 +715,7 @@ describe('walletRPC constructor', () => {
       wallet.should.be.a.Object();
 
       walletRPC = wallet; // Store daemon interface in global variable
-
+/*
       describe('walletRPC methods', () => {
         describe('create_wallet()', () => {
           it(`should create a new wallet ${network}_wallet (unless it exists)`, done => {
@@ -735,8 +735,8 @@ describe('walletRPC constructor', () => {
         });
 
         describe('open_wallet()', () => {
-          it(`should open ${network}_wallet`, done => {
-            walletRPC.open_wallet(`${network}_wallet`)
+          it(`should open ${network}.bin`, done => {
+            walletRPC.open_wallet(`${network}.bin`)
             .then(result => {
               result.should.be.a.Object();
             })
@@ -845,7 +845,7 @@ describe('walletRPC constructor', () => {
                         do_not_relay: true,
                         get_tx_hex: true,
                         get_tx_metadata: true,
-                        payment_id: '1020304050607080'
+                        payment_id: '394dc6dfc57071eb897685e27e6017c45c656758fed9a0b01627f0a644547b5b'
                       })
                       .then(result => {
                         result.should.be.a.Object();
@@ -1007,27 +1007,29 @@ describe('walletRPC constructor', () => {
                     });
                   });
 
+                  // TODO request faucet transaction with this payment ID
                   // TODO wait for payment to be mined
                   describe('get_payments()', () => {
-                    it('should get payments with payment ID 1020304050607080', done => {
-                      walletRPC.get_payments('1020304050607080')
+                    it('should get payments with payment ID 394dc6dfc57071eb897685e27e6017c45c656758fed9a0b01627f0a644547b5b', done => {
+                      walletRPC.get_payments('394dc6dfc57071eb897685e27e6017c45c656758fed9a0b01627f0a644547b5b')
                       .then(result => {
                         result.should.be.a.Object();
                         // TODO finish test
-                        console.log(result);
+                        // console.log(result);f
                       })
                       .then(done, done);
                     });
                   });
 
+                  // TODO request faucet transaction with this payment ID
                   // TODO wait for payment to be mined
                   describe('get_bulk_payments()', () => {
-                    it(`should get payments with payment ID 1020304050607080 from height ${height}`, done => {
-                      walletRPC.get_bulk_payments('1020304050607080', height)
+                    it(`should get payments with payment ID 394dc6dfc57071eb897685e27e6017c45c656758fed9a0b01627f0a644547b5b from height ${Math.floor((height - 1000) / 10000) * 10000}`, done => {
+                      walletRPC.get_bulk_payments('394dc6dfc57071eb897685e27e6017c45c656758fed9a0b01627f0a644547b5b', Math.floor((height - 1000) / 10000) * 10000)
                       .then(result => {
                         result.should.be.a.Object();
                         // TODO finish test
-                        console.log(result);
+                        // console.log(result);
                       })
                       .then(done, done);
                     });
@@ -1415,11 +1417,11 @@ describe('walletRPC constructor', () => {
 
         describe('make_integrated_address()', () => {
           it('should make integrated address', done => {
-            walletRPC.make_integrated_address('1020304050607080')
+            walletRPC.make_integrated_address('394dc6dfc57071eb')
             .then(result => {
               result.should.be.a.Object();
               result.payment_id.should.be.a.String();
-              result.payment_id.should.be.equal('1020304050607080');
+              result.payment_id.should.be.equal('394dc6dfc57071eb');
               result.integrated_address.should.be.a.String();
               integrated_address = result.integrated_address;
             })
@@ -1433,7 +1435,7 @@ describe('walletRPC constructor', () => {
             .then(result => {
               result.should.be.a.Object();
               result.payment_id.should.be.a.String();
-              result.payment_id.should.be.equal('1020304050607080');
+              result.payment_id.should.be.equal('394dc6dfc57071eb');
             })
             .then(done, done);
           });
@@ -1492,7 +1494,7 @@ describe('walletRPC constructor', () => {
 
         describe('make_uri()', () => {
           it('should make uri', done => {
-            walletRPC.make_uri(address, 0.123456789101, '1020304050607080', 'monerojs unit test suite', 'monerojs unit test suite uri')
+            walletRPC.make_uri(address, 0.123456789101, '394dc6dfc57071eb897685e27e6017c45c656758fed9a0b01627f0a644547b5b', 'monerojs unit test suite', 'monerojs unit test suite uri')
             .then(result => {
               result.should.be.a.Object();
               result.uri.should.be.a.String();
@@ -1513,7 +1515,7 @@ describe('walletRPC constructor', () => {
               result.uri.amount.should.be.a.Number();
               result.uri.amount.should.be.equal(123456789101);
               result.uri.payment_id.should.be.a.String();
-              result.uri.payment_id.should.be.equal('1020304050607080');
+              result.uri.payment_id.should.be.equal('394dc6dfc57071eb897685e27e6017c45c656758fed9a0b01627f0a644547b5b');
               result.uri.recipient_name.should.be.a.String();
               result.uri.recipient_name.should.be.equal('monerojs unit test suite');
               result.uri.tx_description.should.be.a.String();
@@ -1527,7 +1529,7 @@ describe('walletRPC constructor', () => {
 
         describe('add_address_book()', () => {
           it('should add address to address book', done => {
-            walletRPC.add_address_book(address, '1020304050607080908070605040302010203040506070809080706050403020', 'monerojs unit test suite address book entry')
+            walletRPC.add_address_book(address, '394dc6dfc57071eb897685e27e6017c45c656758fed9a0b01627f0a644547b5b', 'monerojs unit test suite address book entry')
             .then(result => {
               result.should.be.a.Object();
               result.index.should.be.a.Number();
@@ -1551,7 +1553,7 @@ describe('walletRPC constructor', () => {
               result.entries[0].index.should.be.a.Number();
               result.entries[0].index.should.be.equal(address_book_index);
               result.entries[0].payment_id.should.be.a.String();
-              result.entries[0].payment_id.should.be.equal('1020304050607080908070605040302010203040506070809080706050403020');
+              result.entries[0].payment_id.should.be.equal('394dc6dfc57071eb897685e27e6017c45c656758fed9a0b01627f0a644547b5b');
             })
             .then(done, done);
           });
@@ -1645,7 +1647,7 @@ describe('walletRPC constructor', () => {
         //   });
         // });
       });
-
+*/
       describe('2/2 multisig', () => {
         describe('a. create_wallet()', () => {
           it(`should create a new wallet ${network}_multisig_wallet_2-2_a (unless it exists)`, done => {
@@ -1672,18 +1674,35 @@ describe('walletRPC constructor', () => {
           });
         });
 
-        // TODO check if wallet is_multisig; if it is, check balance
+        let is_wallet_22_a_multisig = false;
+
+        describe('a. is_multisig()', () => {
+          it(`should check if ${network}_multisig_wallet_2-2_a is multisig`, done => {
+            walletRPC.is_multisig()
+            .then(result => {
+              result.should.be.a.Object();
+              result.multisig.should.be.a.Boolean();
+              is_wallet_22_a_multisig = result.multisig;
+            })
+            .then(done, done);
+          });
+        });
+
         let multisig_info_22_a = '';
 
         describe('a. prepare_multisig()', () => {
           it(`should prepare ${network}_multisig_wallet_2-2_a for multisig`, done => {
-            walletRPC.prepare_multisig()
-            .then(result => {
-              result.should.be.a.Object();
-              result.multisig_info.should.be.a.String();
-              multisig_info_22_a = result.multisig_info;
-            })
-            .then(done, done);
+            if (is_wallet_22_a_multisig) {
+              done();
+            } else {
+              walletRPC.prepare_multisig()
+              .then(result => {
+                result.should.be.a.Object();
+                result.multisig_info.should.be.a.String();
+                multisig_info_22_a = result.multisig_info;
+              })
+              .then(done, done);
+            }
           });
         });
 
@@ -1712,18 +1731,35 @@ describe('walletRPC constructor', () => {
           });
         });
 
-        // TODO check if wallet is_multisig; if it is, check balance
+        let is_wallet_22_b_multisig = false;
+
+        describe('b. is_multisig()', () => {
+          it(`should check if ${network}_multisig_wallet_2-2_b is multisig`, done => {
+            walletRPC.is_multisig()
+            .then(result => {
+              result.should.be.a.Object();
+              result.multisig.should.be.a.Boolean();
+              is_wallet_22_b_multisig = result.multisig;
+            })
+            .then(done, done);
+          });
+        });
+
         let multisig_info_22_b = '';
 
         describe('b. prepare_multisig()', () => {
           it(`should prepare ${network}_multisig_wallet_2-2_b for multisig`, done => {
-            walletRPC.prepare_multisig()
-            .then(result => {
-              result.should.be.a.Object();
-              result.multisig_info.should.be.a.String();
-              multisig_info_22_b = result.multisig_info;
-            })
-            .then(done, done);
+            if (is_wallet_22_b_multisig) {
+              done();
+            } else {
+              walletRPC.prepare_multisig()
+              .then(result => {
+                result.should.be.a.Object();
+                result.multisig_info.should.be.a.String();
+                multisig_info_22_b = result.multisig_info;
+              })
+              .then(done, done);
+            }
           });
         });
         
@@ -1731,13 +1767,17 @@ describe('walletRPC constructor', () => {
 
         describe('b. make_multisig()', () => {
           it(`should make ${network}_multisig_wallet_2-2_b multisig`, done => {
-            walletRPC.make_multisig(2, [multisig_info_22_a])
-            .then(result => {
-              result.should.be.a.Object();
-              result.address.should.be.a.String();
-              multisig_address_22_b = result.address;
-            })
-            .then(done, done);
+            if (is_wallet_22_b_multisig) {
+              done();
+            } else {
+              walletRPC.make_multisig(2, [multisig_info_22_a])
+              .then(result => {
+                result.should.be.a.Object();
+                result.address.should.be.a.String();
+                multisig_address_22_b = result.address;
+              })
+              .then(done, done);
+            }
           });
         });
 
@@ -1753,17 +1793,222 @@ describe('walletRPC constructor', () => {
 
         describe('a. make_multisig()', () => {
           it(`should make ${network}_multisig_wallet_2-2_a multisig`, done => {
-            walletRPC.make_multisig(2, [multisig_info_22_b])
+            if (is_wallet_22_a_multisig) {
+              done();
+            } else {
+              walletRPC.make_multisig(2, [multisig_info_22_b])
+              .then(result => {
+                result.should.be.a.Object();
+                result.address.should.be.a.String();
+                result.address.should.be.equal(multisig_address_22_b);
+              })
+              .then(done, done);
+            }
+          });
+        });
+
+        // describe('a. rescan_blockchain()', () => {
+        //   it('should rescan the blockchain for balance', done => {
+        //     walletRPC.rescan_blockchain()
+        //     .then(result => {
+        //       result.should.be.a.Object();
+        //     })
+        //     .then(done, done);
+        //   })
+        //   .timeout(60000);
+        // });
+
+        let multisig_balance_22_a = 0;
+
+        describe('a. getbalance()', () => {
+          it('should retrieve the account balance', done => {
+            walletRPC.getbalance()
             .then(result => {
               result.should.be.a.Object();
-              result.address.should.be.a.String();
-              result.address.should.be.equal(multisig_address_22_b);
+              result.balance.should.be.a.Number();
+              result.unlocked_balance.should.be.a.Number();
+              multisig_balance_22_a = result.unlocked_balance;
+
+              describe('2/2 multisig transfer methods', () => {
+                if (multisig_balance_22_a <= 0) {
+                  // TODO request funding from faucet
+                  describe('check wallet balance...', () => {
+                    it(`it should only test transfer methods if ${network}_multisig_wallet_2-2_a has balance`, done => {
+                      done();
+                    });
+                  });
+                } else {
+                  describe('a. open_wallet()', () => {
+                    it(`should open ${network}_multisig_wallet_2-2_a`, done => {
+                      walletRPC.open_wallet(`${network}_multisig_wallet_2-2_a`)
+                      .then(result => {
+                        result.should.be.a.Object();
+                      })
+                      .then(done, done);
+                    });
+                  });
+
+                  // describe('a. rescan_blockchain()', () => {
+                  //   it('should rescan the blockchain for balance', done => {
+                  //     walletRPC.rescan_blockchain()
+                  //     .then(result => {
+                  //       result.should.be.a.Object();
+                  //     })
+                  //     .then(done, done);
+                  //   })
+                  //   .timeout(60000);
+                  // });
+
+                  describe('a. export_multisig_info()', () => {
+                    it('should export multisig info', done => {
+                      walletRPC.export_multisig_info()
+                      .then(result => {
+                        result.should.be.a.Object();
+                        result.info.should.be.a.String();
+                        multisig_info_22_a = result.info;
+                      })
+                      .then(done, done);
+                    })
+                    .timeout(30000);
+                  });
+
+                  describe('b. open_wallet()', () => {
+                    it(`should open ${network}_multisig_wallet_2-2_b`, done => {
+                      walletRPC.open_wallet(`${network}_multisig_wallet_2-2_b`)
+                      .then(result => {
+                        result.should.be.a.Object();
+                      })
+                      .then(done, done);
+                    });
+                  });
+
+                  let address = '';
+
+                  describe('b. getaddress()', () => {
+                    it('should return the account address', done => {
+                      walletRPC.getaddress()
+                      .then(result => {
+                        result.should.be.a.Object();
+                        result.address.should.be.a.String();
+                        result.addresses.should.be.a.Array();
+                        result.addresses[0].should.be.a.Object();
+                        result.addresses[0].address_index.should.be.a.Number();
+                        address = result.address;
+                      })
+                      .then(done, done);
+                    });
+                  });
+
+                  // describe('b. rescan_blockchain()', () => {
+                  //   it('should rescan the blockchain for balance', done => {
+                  //     walletRPC.rescan_blockchain()
+                  //     .then(result => {
+                  //       result.should.be.a.Object();
+                  //     })
+                  //     .then(done, done);
+                  //   })
+                  //   .timeout(60000);
+                  // });
+
+                  describe('b. import_multisig_info()', () => {
+                    it('should import multisig info', done => {
+                      walletRPC.import_multisig_info([multisig_info_22_a])
+                      .then(result => {
+                        result.should.be.a.Object();
+                        result.n_outputs.should.be.a.Number();
+                      })
+                      .then(done, done);
+                    })
+                    .timeout(30000);
+                  });
+
+                  let multisig_txset_22_b = ''
+
+                  describe('b. transfer()', () => {
+                    it('should generate transaction', done => {
+                      walletRPC.transfer({
+                        address: address,
+                        amount: 0.1,
+                        mixin: 6,
+                        get_tx_key: true,
+                        priority: 1,
+                        do_not_relay: true,
+                        get_tx_hex: true,
+                        get_tx_metadata: true
+                      })
+                      .then(result => {
+                        result.should.be.a.Object();
+                        result.amount.should.be.a.Number();
+                        result.amount.should.be.equal(100000000000);
+                        result.fee.should.be.a.Number();
+                        // result.tx_hash.should.be.a.String();
+                        result.tx_key.should.be.a.String();
+                        // result.tx_blob.should.be.a.String();
+                        // result.tx_metadata.should.be.a.String();
+                        result.multisig_txset.should.be.a.String();
+                        multisig_txset_22_b = result.multisig_txset;
+                      })
+                      .then(done, done);
+                    })
+                    .timeout(5000);
+                  });
+
+                  // describe('b. export_multisig_info()', () => {
+                  //   it('should export multisig info', done => {
+                  //     walletRPC.export_multisig_info()
+                  //     .then(result => {
+                  //       result.should.be.a.Object();
+                  //       result.info.should.be.a.String();
+                  //       multisig_info_22_b = result.info;
+                  //     })
+                  //     .then(done, done);
+                  //   })
+                  //   .timeout(30000);
+                  // });
+
+                  describe('a. open_wallet()', () => {
+                    it(`should open ${network}_multisig_wallet_2-2_a`, done => {
+                      walletRPC.open_wallet(`${network}_multisig_wallet_2-2_a`)
+                      .then(result => {
+                        result.should.be.a.Object();
+                      })
+                      .then(done, done);
+                    });
+                  });
+
+                  // describe('a. import_multisig_info()', () => {
+                  //   it('should import multisig info', done => {
+                  //     walletRPC.import_multisig_info([multisig_info_22_b])
+                  //     .then(result => {
+                  //       result.should.be.a.Object();
+                  //       result.n_outputs.should.be.a.Number();
+                  //     })
+                  //     .then(done, done);
+                  //   })
+                  //   .timeout(30000);
+                  // });
+
+                  describe('a. sign_multisig()', () => {
+                    it('should sign multisig transaction', done => {
+                      walletRPC.sign_multisig(multisig_txset_22_b)
+                      .then(result => {
+                        result.should.be.a.Object();
+                        console.log(result);
+                      })
+                      .then(done, done);
+                    });
+                  });
+
+                  // sign_multisig it up to the ${threshold} before using submit_multisig.  Add this example for 2/2 and 2/3.
+
+                }
+              });
             })
             .then(done, done);
           });
         });
       });
-
+/*
       describe('2/3 multisig', () => {
         describe('a. create_wallet()', () => {
           it(`should create a new wallet ${network}_multisig_wallet_2-3_a (unless it exists)`, done => {
@@ -1790,18 +2035,35 @@ describe('walletRPC constructor', () => {
           });
         });
 
-        // TODO check if wallet is_multisig; if it is, check balance
+        let is_wallet_23_a_multisig = false;
+
+        describe('a. is_multisig()', () => {
+          it(`should check if ${network}_multisig_wallet_2-3_a is multisig`, done => {
+            walletRPC.is_multisig()
+            .then(result => {
+              result.should.be.a.Object();
+              result.multisig.should.be.a.Boolean();
+              is_wallet_23_a_multisig = result.multisig;
+            })
+            .then(done, done);
+          });
+        });
+
         let multisig_info_23_a = '';
 
         describe('a. prepare_multisig()', () => {
           it(`should prepare ${network}_multisig_wallet_2-3_a for multisig`, done => {
-            walletRPC.prepare_multisig()
-            .then(result => {
-              result.should.be.a.Object();
-              result.multisig_info.should.be.a.String();
-              multisig_info_23_a = result.multisig_info;
-            })
-            .then(done, done);
+            if (is_wallet_23_a_multisig) {
+              done();
+            } else {
+              walletRPC.prepare_multisig()
+              .then(result => {
+                result.should.be.a.Object();
+                result.multisig_info.should.be.a.String();
+                multisig_info_23_a = result.multisig_info;
+              })
+              .then(done, done);
+            }
           });
         });
 
@@ -1832,18 +2094,35 @@ describe('walletRPC constructor', () => {
           });
         });
 
-        // TODO check if wallet is_multisig; if it is, check balance
+        let is_wallet_23_b_multisig = false;
+
+        describe('b. is_multisig()', () => {
+          it(`should check if ${network}_multisig_wallet_2-3_b is multisig`, done => {
+            walletRPC.is_multisig()
+            .then(result => {
+              result.should.be.a.Object();
+              result.multisig.should.be.a.Boolean();
+              is_wallet_23_b_multisig = result.multisig;
+            })
+            .then(done, done);
+          });
+        });
+
         let multisig_info_23_b = '';
 
         describe('b. prepare_multisig()', () => {
           it(`should prepare ${network}_multisig_wallet_2-3_b for multisig`, done => {
-            walletRPC.prepare_multisig()
-            .then(result => {
-              result.should.be.a.Object();
-              result.multisig_info.should.be.a.String();
-              multisig_info_23_b = result.multisig_info;
-            })
-            .then(done, done);
+            if (is_wallet_23_b_multisig) {
+              done();
+            } else {
+              walletRPC.prepare_multisig()
+              .then(result => {
+                result.should.be.a.Object();
+                result.multisig_info.should.be.a.String();
+                multisig_info_23_b = result.multisig_info;
+              })
+              .then(done, done);
+            }
           });
         });
 
@@ -1874,18 +2153,35 @@ describe('walletRPC constructor', () => {
           });
         });
 
-        // TODO check if wallet is_multisig; if it is, check balance
+        let is_wallet_23_c_multisig = false;
+
+        describe('c. is_multisig()', () => {
+          it(`should check if ${network}_multisig_wallet_2-3_c is multisig`, done => {
+            walletRPC.is_multisig()
+            .then(result => {
+              result.should.be.a.Object();
+              result.multisig.should.be.a.Boolean();
+              is_wallet_23_c_multisig = result.multisig;
+            })
+            .then(done, done);
+          });
+        });
+
         let multisig_info_23_c = '';
 
         describe('c. prepare_multisig()', () => {
           it(`should prepare ${network}_multisig_wallet_2-3_c for multisig`, done => {
-            walletRPC.prepare_multisig()
-            .then(result => {
-              result.should.be.a.Object();
-              result.multisig_info.should.be.a.String();
-              multisig_info_23_c = result.multisig_info;
-            })
-            .then(done, done);
+            if (is_wallet_23_c_multisig) {
+              done();
+            } else {
+              walletRPC.prepare_multisig()
+              .then(result => {
+                result.should.be.a.Object();
+                result.multisig_info.should.be.a.String();
+                multisig_info_23_c = result.multisig_info;
+              })
+              .then(done, done);
+            }
           });
         });
 
@@ -1903,14 +2199,18 @@ describe('walletRPC constructor', () => {
 
         describe('a. make_multisig()', () => {
           it(`should make ${network}_multisig_wallet_2-3_a multisig`, done => {
-            walletRPC.make_multisig(2, [multisig_info_23_b, multisig_info_23_c])
-            .then(result => {
-              result.should.be.a.Object();
-              result.address.should.be.a.String();
-              result.multisig_info.should.be.a.String();
-              multisig_finalization_23_a = result.multisig_info;
-            })
-            .then(done, done);
+            if (is_wallet_23_a_multisig) {
+              done();
+            } else {
+              walletRPC.make_multisig(2, [multisig_info_23_b, multisig_info_23_c])
+              .then(result => {
+                result.should.be.a.Object();
+                result.address.should.be.a.String();
+                result.multisig_info.should.be.a.String();
+                multisig_finalization_23_a = result.multisig_info;
+              })
+              .then(done, done);
+            }
           });
         });
 
@@ -1928,14 +2228,18 @@ describe('walletRPC constructor', () => {
 
         describe('b. make_multisig()', () => {
           it(`should make ${network}_multisig_wallet_2-3_b multisig`, done => {
-            walletRPC.make_multisig(2, [multisig_info_23_a, multisig_info_23_c])
-            .then(result => {
-              result.should.be.a.Object();
-              result.address.should.be.a.String();
-              result.multisig_info.should.be.a.String();
-              multisig_finalization_23_b = result.multisig_info;
-            })
-            .then(done, done);
+            if (is_wallet_23_b_multisig) {
+              done();
+            } else {
+              walletRPC.make_multisig(2, [multisig_info_23_a, multisig_info_23_c])
+              .then(result => {
+                result.should.be.a.Object();
+                result.address.should.be.a.String();
+                result.multisig_info.should.be.a.String();
+                multisig_finalization_23_b = result.multisig_info;
+              })
+              .then(done, done);
+            }
           });
         });
 
@@ -1953,14 +2257,18 @@ describe('walletRPC constructor', () => {
 
         describe('c. make_multisig()', () => {
           it(`should make ${network}_multisig_wallet_2-3_c multisig`, done => {
-            walletRPC.make_multisig(2, [multisig_info_23_a, multisig_info_23_b])
-            .then(result => {
-              result.should.be.a.Object();
-              result.address.should.be.a.String();
-              result.multisig_info.should.be.a.String();
-              multisig_finalization_23_c = result.multisig_info;
-            })
-            .then(done, done);
+            if (is_wallet_23_c_multisig) {
+              done();
+            } else {
+              walletRPC.make_multisig(2, [multisig_info_23_a, multisig_info_23_b])
+              .then(result => {
+                result.should.be.a.Object();
+                result.address.should.be.a.String();
+                result.multisig_info.should.be.a.String();
+                multisig_finalization_23_c = result.multisig_info;
+              })
+              .then(done, done);
+            }
           });
         });
 
@@ -1968,13 +2276,17 @@ describe('walletRPC constructor', () => {
 
         describe('c. finalize_multisig()', () => {
           it(`should finalize ${network}_multisig_wallet_2-3_c as multisig`, done => {
-            walletRPC.finalize_multisig([multisig_finalization_23_a, multisig_finalization_23_b])
-            .then(result => {
-              result.should.be.a.Object();
-              result.address.should.be.a.String();
-              multisig_address_22_c = result.address;
-            })
-            .then(done, done);
+            if (is_wallet_23_c_multisig) {
+              done();
+            } else {
+              walletRPC.finalize_multisig([multisig_finalization_23_a, multisig_finalization_23_b])
+              .then(result => {
+                result.should.be.a.Object();
+                result.address.should.be.a.String();
+                multisig_address_22_c = result.address;
+              })
+              .then(done, done);
+            }
           });
         });
 
@@ -1990,13 +2302,17 @@ describe('walletRPC constructor', () => {
 
         describe('a. finalize_multisig()', () => {
           it(`should finalize ${network}_multisig_wallet_2-3_a as multisig`, done => {
-            walletRPC.finalize_multisig([multisig_finalization_23_b, multisig_finalization_23_c])
-            .then(result => {
-              result.should.be.a.Object();
-              result.address.should.be.a.String();
-              result.address.should.be.equal(multisig_address_22_c);
-            })
-            .then(done, done);
+            if (is_wallet_23_a_multisig) {
+              done();
+            } else {
+              walletRPC.finalize_multisig([multisig_finalization_23_b, multisig_finalization_23_c])
+              .then(result => {
+                result.should.be.a.Object();
+                result.address.should.be.a.String();
+                result.address.should.be.equal(multisig_address_22_c);
+              })
+              .then(done, done);
+            }
           });
         });
 
@@ -2012,11 +2328,43 @@ describe('walletRPC constructor', () => {
 
         describe('b. finalize_multisig()', () => {
           it(`should finalize ${network}_multisig_wallet_2-3_b as multisig`, done => {
-            walletRPC.finalize_multisig([multisig_finalization_23_a, multisig_finalization_23_c])
+            if (is_wallet_23_b_multisig) {
+              done();
+            } else {
+              walletRPC.finalize_multisig([multisig_finalization_23_a, multisig_finalization_23_c])
+              .then(result => {
+                result.should.be.a.Object();
+                result.address.should.be.a.String();
+                result.address.should.be.equal(multisig_address_22_c);
+              })
+              .then(done, done);
+            }
+          });
+        });
+
+        describe('b. rescan_blockchain()', () => {
+          it('should rescan the blockchain for balance', done => {
+            walletRPC.rescan_blockchain()
             .then(result => {
               result.should.be.a.Object();
-              result.address.should.be.a.String();
-              result.address.should.be.equal(multisig_address_22_c);
+            })
+            .then(done, done);
+          })
+          .timeout(60000);
+        });
+
+        let multisig_balance_23_b = '';
+
+        describe('b. getbalance()', () => {
+          it('should retrieve the account balance', done => {
+            walletRPC.getbalance()
+            .then(result => {
+              result.should.be.a.Object();
+              result.balance.should.be.a.Number();
+              result.unlocked_balance.should.be.a.Number();
+              multisig_balance_23_b = result.unlocked_balance;
+
+              console.log('multisig_balance_23_b', multisig_balance_23_b);
             })
             .then(done, done);
           });
@@ -2030,6 +2378,7 @@ describe('walletRPC constructor', () => {
         // TODO to test multisignature spends, open a multisignature wallet and check its balance.  If balance > 0, export_multisig_info from at least ${threshold} other wallets and import_multisig_info them.  Initiate a transfer from any of the multisig wallets and sign_multisig it up to the ${threshold} before using submit_multisig.  Add this example for 2/2 and 2/3.
 
       });
+*/
     })
     .catch(error => {
       // TODO handle error
