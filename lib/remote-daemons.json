@@ -25,12 +25,6 @@
       "remote": true
     },
     {
-      "hostname": "node.xmrbackb.one",
-      "port": 18081,
-      "protocol": "http",
-      "remote": true
-    },
-    {
       "hostname": "node.viaxmr.com ",
       "port": 18081,
       "protocol": "http",
